@@ -1,17 +1,14 @@
 CMD
-Charniga
 CmdStan
 CmdStanModel
 Codecov
 Cori
-Dirichlet
-EpiEstim
-Gumbel
 Inf
 Lifecycle
+Mba
+ORCID
 PMF
 PMFs
-Poisson
 SamuelBrand
 Stan’
 arXiv
@@ -21,7 +18,6 @@ cdot
 cens
 cmdstan
 cmdstanr
-disccensprob
 disccensunifprim
 discretisation
 discretising
@@ -43,6 +39,7 @@ gammapartexp
 geq
 hexsticker
 int
+jamesmbaazam
 jcblemai
 kz
 leq
@@ -53,6 +50,7 @@ ln
 lognormpartexp
 mathbb
 mathrm
+meanlog
 modelhelpers
 modeling
 nF
@@ -62,7 +60,10 @@ partexp
 pcd
 pcens
 pdist
+pearsonca
+plnorm
 pprimarycensored
+precalculation
 primaryeventdistributions
 propto
 pwindow
@@ -72,6 +73,7 @@ rfloor
 rightarrow
 rprimary
 sbfnk
+sdlog
 seabbs
 seccensorprob
 sim

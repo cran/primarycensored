@@ -1,3 +1,30 @@
+
+# primarycensored 1.1.0
+
+This minor release improves the documentation and the internal system used to automatically discover analytical solutions. It also adds lookups for supported supported distributions and tooling for working with these lookups. This makes it easier for package developers using `primarycensored` and also makes it easier to work with the Stan likelihood functions by improving the discoverability of the distribution functions. Minor bugs were also fixed.
+
+## Package
+
+- Updated the CI so that stan code is also tested on Windows and Mac. This is to ensure that the stan code is compatible with these platforms and in response to a CI bug in `epidist`.
+- Revised approach to automatic discovery of distribution functions. This soft deprecates the `pdist_name` and `dprimary_name` arguments throughout. Users wishing to pass distribution names (i.e. to potentially leverage analytical solutions) are advised to use the newly introduced `add_name_attribute()` function. Adds transient dependency on `lifecycle` and `rlang` packages. See #188 by @pearsonca.
+- Added `pcd_stan_dist_id()` to allow for discovery of distribution IDs for Stan models.
+- Added `pcd_dist_name()` to allow for discovery of distribution names for R functions as needed for `add_name_attribute()`.
+- Added documentation to suggest the use of `methods(pcens_cdf)` to find analytical solutions.
+- Added new data sets `pcd_distributions` and `pcd_primary_distributions` to document the distributions supported by `primarycensored`.
+
+## Documentation
+
+- Added a CRAN downloads badge to the README.
+- Corrected how to specify an empty array in the docs of `primarycensored_lcdf()`.
+- All documentation was reviewed and updated to enhance readability and clarity.
+
+## Bug fixes
+
+- Added a missing `@family` tag to the `pcens` functions. This omission resulted in the Weibull analytical solution not being visible in the package documentation.
+- Added precalculation of vector sizes to the `primarycensored_cdf()` stan function, avoiding errors on some platforms due to narrowing conversions in aggregate initialisation.
+- Changed `D` to be of type real in `pcens_model.stan` in order to support infinite `relative_obs_time`.
+- Switched to using `num_elements()` over `size()` in all stan code to resolve compilation issues on some platforms as reported by @sbfnk.
+
 # primarycensored 1.0.0
 
 This is the first major release of `primarycensored` and has been submitted to CRAN.

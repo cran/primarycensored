@@ -25,7 +25,7 @@ Vector of computed primary event censored CDFs
 \description{
 This method serves as a fallback for combinations of delay and primary
 event distributions that don't have specific implementations. It uses
-the numeric integration method.
+a numeric integration method.
 }
 \details{
 This method implements the numerical integration approach for computing
@@ -41,6 +41,7 @@ Low level primary event censored distribution objects and methods
 \code{\link{new_pcens}()},
 \code{\link{pcens_cdf}()},
 \code{\link{pcens_cdf.pcens_pgamma_dunif}()},
-\code{\link{pcens_cdf.pcens_plnorm_dunif}()}
+\code{\link{pcens_cdf.pcens_plnorm_dunif}()},
+\code{\link{pcens_cdf.pcens_pweibull_dunif}()}
 }
 \concept{pcens}

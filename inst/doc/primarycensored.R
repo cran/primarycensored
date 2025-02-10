@@ -12,28 +12,28 @@ sdlog <- 0.75
 obs_time <- 10
 pwindow <- 1
 
-# Random samples without secondary censoring
+# Random samples without secondary event censoring
 samples <- rprimarycensored(
   n,
   rdist = rlnorm, rprimary = runif,
   pwindow = pwindow, swindow = 0, D = obs_time,
   meanlog = meanlog, sdlog = sdlog
 )
-# Random samples with secondary censoring
+# Random samples with secondary event censoring
 samples_sc <- rprimarycensored(
   n,
   rdist = rlnorm, rprimary = runif,
   pwindow = pwindow, swindow = 1, D = obs_time,
   meanlog = meanlog, sdlog = sdlog
 )
-# Calculate the PMF for the samples with secondary censoring
+# Calculate the PMF for the samples with secondary event censoring
 samples_sc_pmf <- data.frame(
   pmf =
     table(samples_sc) /
       sum(table(samples_sc))
 )
-# Compare the samples with and without secondary censoring to the true
-# distribution
+# Compare the samples with and without secondary event censoring
+# to the true distribution
 ggplot() +
   geom_density(
     data = data.frame(samples = samples),
@@ -62,15 +62,18 @@ ggplot() +
   ) +
   labs(
     title = "Comparison of Samples from Log-Normal Distribution",
-    x = "Samples",
+    x = "Delay",
     y = "Density",
     caption = paste0(
-      "Blue density: Samples without secondary censoring\n",
-      "Green bars: Samples with secondary censoring\n",
+      "Blue density: Truncated samples without secondary event censoring\n",
+      "Green bars: Truncated samples with secondary event censoring\n",
       "Black line: True log-normal distribution without truncation"
     )
   ) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+  scale_x_continuous(limits = c(0, 15)) +
+  scale_y_continuous(
+    expand = expansion(mult = c(0, 0.05))
+  ) +
   theme_minimal() +
   theme(
     panel.grid.minor = element_blank(),
@@ -102,7 +105,8 @@ ggplot(cdf_data, aes(x = x)) +
     x = "Delay",
     y = "Cumulative Probability",
     caption = paste0(
-      "Blue line: Empirical CDF from samples without secondary censoring\n",
+      "Blue line: Empirical CDF from samples without secondary
+       event  censoring\n",
       "Black line: Theoretical CDF computed using pprimarycensored()"
     )
   ) +
@@ -149,10 +153,10 @@ ggplot() +
   ) +
   labs(
     title = "Comparison of Samples from Log-Normal Distribution",
-    x = "Samples",
+    x = "Delay",
     y = "Density",
     caption = paste0(
-      "Green bars: Empirical PMF from samples with secondary censoring\n",
+      "Green bars: Empirical PMF from samples with secondary event censoring\n",
       "Black line: Theoretical PMF computed using dprimarycensored()"
     )
   ) +
