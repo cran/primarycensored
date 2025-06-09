@@ -11,8 +11,10 @@ PMF
 PMFs
 SamuelBrand
 Stan’
-arXiv
+adamkucharski
 athowes
+arXiv
+barbora
 cdf
 cdot
 cens
@@ -55,6 +57,7 @@ modelhelpers
 modeling
 nF
 obs
+optim
 parksw
 partexp
 pcd
@@ -77,6 +80,7 @@ sdlog
 seabbs
 seccensorprob
 sim
+sobolova
 speedups
 stan
 stantools

@@ -4,7 +4,7 @@
 \alias{.ppcens}
 \title{Define a fitdistrplus compatible wrapper around pprimarycensored}
 \usage{
-.ppcens(q, pdist, pwindow, D, dprimary, dprimary_args, ...)
+.ppcens(q, params, pdist, dprimary, dprimary_args, ...)
 }
 \arguments{
 \item{q}{Vector of quantiles}
@@ -14,20 +14,15 @@ distributions for potential analytical solutions. For non-base R functions,
 users can apply \code{\link[=add_name_attribute]{add_name_attribute()}} to yield properly tagged
 functions if they wish to leverage the analytical solutions.}
 
-\item{pwindow}{Primary event window}
-
-\item{D}{Maximum delay (truncation point). If finite, the distribution is
-truncated at D. If set to Inf, no truncation is applied. Defaults to Inf.}
-
 \item{dprimary}{Function to generate the probability density function
 (PDF) of primary event times. This function should take a value \code{x} and a
 \code{pwindow} parameter, and return a probability density. It should be
 normalized to integrate to 1 over [0, pwindow]. Defaults to a uniform
 distribution over [0, pwindow]. Users can provide custom functions or use
 helper functions like \code{dexpgrowth} for an exponential growth distribution.
-See \code{primary_dists.R} for examples. The package can identify base R
-distributions for potential analytical solutions. For non-base R functions,
-users can apply \code{\link[=add_name_attribute]{add_name_attribute()}} to yield properly tagged
+See \code{\link[=pcd_primary_distributions]{pcd_primary_distributions()}} for examples. The package can identify
+base R distributions for potential analytical solutions. For non-base R
+functions, users can apply \code{\link[=add_name_attribute]{add_name_attribute()}} to yield properly tagged
 functions if they wish to leverage analytical solutions.}
 
 \item{dprimary_args}{List of additional arguments to be passed to

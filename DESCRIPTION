@@ -1,6 +1,6 @@
 Package: primarycensored
 Title: Primary Event Censored Distributions
-Version: 1.1.0
+Version: 1.2.0
 Authors@R: 
   c(person(given = "Sam",
            family = "Abbott",
@@ -19,7 +19,7 @@ Authors@R:
            comment = c(ORCID = "0000-0003-2386-4031")),
     person(given = "James Mba",
            family = "Azam",
-           role = c("ctb"),
+           role = c("aut"),
            email = "james.azam@lshtm.ac.uk",
            comment = c(ORCID = "0000-0001-5782-7330")),
     person(given = "Carl",
@@ -67,14 +67,15 @@ LazyData: true
 RoxygenNote: 7.3.2
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2025-02-10 19:38:57 UTC; lshsa2
-Author: Sam Abbott [aut, cre, cph] (<https://orcid.org/0000-0001-8057-8037>),
-  Sam Brand [aut] (<https://orcid.org/0000-0003-0645-5367>),
-  Adam Howes [ctb] (<https://orcid.org/0000-0003-2386-4031>),
-  James Mba Azam [ctb] (<https://orcid.org/0000-0001-5782-7330>),
-  Carl Pearson [aut] (<https://orcid.org/0000-0003-0701-7860>),
-  Sebastian Funk [aut] (<https://orcid.org/0000-0002-2842-3406>),
-  Kelly Charniga [aut] (<https://orcid.org/0000-0002-7648-7041>)
+Packaged: 2025-06-09 14:29:33 UTC; lshsa2
+Author: Sam Abbott [aut, cre, cph] (ORCID:
+    <https://orcid.org/0000-0001-8057-8037>),
+  Sam Brand [aut] (ORCID: <https://orcid.org/0000-0003-0645-5367>),
+  Adam Howes [ctb] (ORCID: <https://orcid.org/0000-0003-2386-4031>),
+  James Mba Azam [aut] (ORCID: <https://orcid.org/0000-0001-5782-7330>),
+  Carl Pearson [aut] (ORCID: <https://orcid.org/0000-0003-0701-7860>),
+  Sebastian Funk [aut] (ORCID: <https://orcid.org/0000-0002-2842-3406>),
+  Kelly Charniga [aut] (ORCID: <https://orcid.org/0000-0002-7648-7041>)
 Maintainer: Sam Abbott <contact@samabbott.co.uk>
 Repository: CRAN
-Date/Publication: 2025-02-10 19:50:02 UTC
+Date/Publication: 2025-06-09 14:50:02 UTC

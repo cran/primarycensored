@@ -1,3 +1,22 @@
+# primarycensored 1.2.0
+
+This minor release adds quantile functions for primary censored distributions and enhances the `fitdistdoublecens()` function to support varying primary censoring windows and truncation times. The release also improves documentation, particularly the Stan reference, making it easier for users to navigate and work with the Stan code.
+
+## Package
+
+- Added new functions to compute quantiles of the primary censored distribution:
+  - `pcens_quantile()`: Core implementation using numerical optimisation to find
+    quantiles by inverting the CDF. The implementation allows for analytical
+    solutions to be added in future versions using the same interface as `pcens_cdf()`.
+  - `qpcens()` and `qprimarycensored()`: Convenient wrapper functions that provide
+    alternative interfaces to `pcens_quantile()`.
+- Added support to `fitdistdoublecens()` to allow for varying primary censoring windows and truncation times. As part of this refactor the interface has also been improved to allow for more flexible data input.
+
+## Documentation
+
+- Removed authorship from vignettes.
+- Updated the `fitdistrplus` vignette to use more complex data where the relative observation time is not constant. Also removed the note that the `fitdistdoublecens()` function is limited to a single primary censoring windows and truncation time as this is no longer the case.
+- The [Stan Reference](https://primarycensored.epinowcast.org/stan/) has been enhanced to make it easier to navigate the Stan code.
 
 # primarycensored 1.1.0
 
