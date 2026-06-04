@@ -26,19 +26,22 @@ Provides functions for working with primary event censored distributions
 and ‘Stan’ implementations for use in Bayesian modeling. Primary event
 censored distributions are useful for modeling delayed reporting
 scenarios in epidemiology and other fields (Charniga et al. (2024)
-<doi:10.48550/arXiv.2405.08841>). It also provides support for arbitrary
-delay distributions, a range of common primary distributions, and allows
-for truncation and secondary event censoring to be accounted for (Park
-et al. (2024) <doi:10.1101/2024.01.12.24301247>). A subset of common
-distributions also have analytical solutions implemented, allowing for
-faster computation. In addition, it provides multiple methods for
-fitting primary event censored distributions to data via optional
-dependencies.
+[doi:10.48550/arXiv.2405.08841](https://doi.org/10.48550/arXiv.2405.08841)).
+It also provides support for arbitrary delay distributions, a range of
+common primary distributions, and allows for truncation and secondary
+event censoring to be accounted for (Park et al. (2024)
+[doi:10.1101/2024.01.12.24301247](https://doi.org/10.1101/2024.01.12.24301247)).
+A subset of common distributions also have analytical solutions
+implemented, allowing for faster computation. In addition, it provides
+multiple methods for fitting primary event censored distributions to
+data via optional dependencies.
 
 ## Installation
 
 <details>
+
 <summary>
+
 Installing the package
 </summary>
 
@@ -77,8 +80,11 @@ if needed, for example, if you want to try out a specific unreleased
 feature, but not the absolute latest developmental version.*
 
 </details>
+
 <details>
+
 <summary>
+
 Installing CmdStan (optional for Stan functionality)
 </summary>
 
@@ -118,7 +124,9 @@ We provide a range of other documentation, case studies, and community
 spaces to ask (and answer!) questions:
 
 <details>
+
 <summary>
+
 Package Website
 </summary>
 
@@ -129,8 +137,11 @@ find documentation for [the latest development
 version](https://primarycensored.epinowcast.org/dev/).
 
 </details>
+
 <details>
+
 <summary>
+
 Vignettes
 </summary>
 
@@ -140,8 +151,11 @@ get started with primarycensored and to highlight other features with
 case studies.
 
 </details>
+
 <details>
+
 <summary>
+
 Organisation Website
 </summary>
 
@@ -151,8 +165,11 @@ and [seminar schedule](https://www.epinowcast.org/seminars.html) for
 both upcoming and past recordings.
 
 </details>
+
 <details>
+
 <summary>
+
 Community Forum
 </summary>
 
@@ -207,19 +224,21 @@ By contributing to this project, you agree to abide by its terms.
 
 If making use of our methodology or the methodology on which ours is
 based, please cite the relevant papers from our [methods
-outline](https://primarycensored.epinowcast.org/articles//primarycensored.html).
+outline](https://primarycensored.epinowcast.org/articles/primarycensored.html).
 If you use `primarycensored` in your work, please consider citing it
 with `citation("primarycensored")`.
 
 ## Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+
 <!-- prettier-ignore-start -->
+
 <!-- markdownlint-disable -->
 
 All contributions to this project are gratefully acknowledged using the
 [`allcontributors` package](https://github.com/ropensci/allcontributors)
-following the [all-contributors](https://allcontributors.org)
+following the [allcontributors](https://allcontributors.org)
 specification. Contributions of any kind are welcome!
 
 ### Code
@@ -228,16 +247,18 @@ specification. Contributions of any kind are welcome!
 <a href="https://github.com/epinowcast/primarycensored/commits?author=SamuelBrand1">SamuelBrand1</a>,
 <a href="https://github.com/epinowcast/primarycensored/commits?author=sbfnk">sbfnk</a>,
 <a href="https://github.com/epinowcast/primarycensored/commits?author=athowes">athowes</a>,
-<a href="https://github.com/epinowcast/primarycensored/commits?author=seabbs-bot">seabbs-bot</a>,
 <a href="https://github.com/epinowcast/primarycensored/commits?author=jamesmbaazam">jamesmbaazam</a>,
 <a href="https://github.com/epinowcast/primarycensored/commits?author=barbora-sobolova">barbora-sobolova</a>,
-<a href="https://github.com/epinowcast/primarycensored/commits?author=pearsonca">pearsonca</a>
+<a href="https://github.com/epinowcast/primarycensored/commits?author=pearsonca">pearsonca</a>,
+<a href="https://github.com/epinowcast/primarycensored/commits?author=kaitejohnson">kaitejohnson</a>,
+<a href="https://github.com/epinowcast/primarycensored/commits?author=TimTaylor">TimTaylor</a>
 
 ### Issue Authors
 
 <a href="https://github.com/epinowcast/primarycensored/issues?q=is%3Aissue+author%3Azsusswein">zsusswein</a>,
 <a href="https://github.com/epinowcast/primarycensored/issues?q=is%3Aissue+author%3Ajcblemai">jcblemai</a>,
-<a href="https://github.com/epinowcast/primarycensored/issues?q=is%3Aissue+author%3Aadamkucharski">adamkucharski</a>
+<a href="https://github.com/epinowcast/primarycensored/issues?q=is%3Aissue+author%3Aadamkucharski">adamkucharski</a>,
+<a href="https://github.com/epinowcast/primarycensored/issues?q=is%3Aissue+author%3AOvertonC2">OvertonC2</a>
 
 ### Issue Contributors
 
@@ -247,5 +268,7 @@ specification. Contributions of any kind are welcome!
 <a href="https://github.com/epinowcast/primarycensored/issues?q=is%3Aissue+commenter%3AWardBrian">WardBrian</a>
 
 <!-- markdownlint-enable -->
+
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
