@@ -1,7 +1,7 @@
-baa380cd57e90a74138ce78577a018d9 *DESCRIPTION
+986e6168568b66f6f9e068a3626ab52c *DESCRIPTION
 5540db98d207e02828554154ad6a2939 *LICENSE
 7d2c701c7a40996020cb50f0715040e5 *NAMESPACE
-50532e9b15be7126d9fd28dd904dda73 *NEWS.md
+53b763a15aa59440e75c3431e0762aec *NEWS.md
 9564e8b897243eb6112b0fa27719b3b0 *R/check.R
 0c820806c24f169ebe06466d0dc2cb9f *R/data.R
 20d16cf15900eac6818c95d5a6485c85 *R/dprimarycensored.R
@@ -18,8 +18,8 @@ e5349eef15beab5f7b2bcea6eff56f65 *R/qprimarycensored.R
 a86cce2e9ed06cfb22f52fd3bcc18690 *R/rprimarycensored.R
 7f35a84288a11d48cc9d17f635637dad *R/utils.R
 3b3dcbd740065b659787b96375316ea5 *README.md
-b52aabe9a2757fc86742763db9dafc9b *build/partial.rdb
-a61c7c56c698f2a067ea25d11bfefd5e *build/vignette.rds
+533839446f70bde34a1050627ce80586 *build/partial.rdb
+93b7334abb9f534a96147c797fc0adf0 *build/vignette.rds
 ad86ccc6229eab309e271e5e8a83b771 *data/pcd_distributions.rda
 bc2134cfa11970fd0f61fe1f81d2a09b *data/pcd_primary_distributions.rda
 69278bc288275ffb741ea4a6ea3251b3 *inst/CITATION
@@ -28,7 +28,7 @@ abe524ab7215475442bc448370e4e9a3 *inst/doc/analytic-solutions.Rmd
 95d56f44acba157c795f49ac2b4b5b3d *inst/doc/analytic-solutions.html
 f706d84dffdba03076280f15442c6eaf *inst/doc/primarycensored.R
 b7238ce394297d52fe988adbed93c52e *inst/doc/primarycensored.Rmd
-13df9a697b9bfecf0feb5359cc0ef16d *inst/doc/primarycensored.html
+db4af727082b791342926e44a926caca *inst/doc/primarycensored.html
 a360e700d52e26d7d00507565bce93a4 *inst/doc/why-it-works.Rmd
 aa37940123c4052e559f2fe63723f3b3 *inst/doc/why-it-works.html
 0261e2b9fb37a5e37414c0367589b778 *inst/stan/docs/Doxyfile
@@ -44,7 +44,7 @@ d4504312dc58cc7c10918da4ec05379e *inst/stan/docs/doxygen-awesome/doxygen-awesome
 083843d6dd851809fb8d62cf4657e75b *inst/stan/docs/function_groups.stan
 80e4fb969c02ed0133e61f1646b0b383 *inst/stan/docs/mainpage.md
 85e6bd8c04073427ed5df619ed872c75 *inst/stan/functions/expgrowth.stan
-3b9ff97984f1932640ca54ec4e6680d5 *inst/stan/functions/primarycensored.stan
+a098d540d0d29653f0d568fbf4a53e34 *inst/stan/functions/primarycensored.stan
 c4d6455295ab522ae96a237244b4b18e *inst/stan/functions/primarycensored_analytical_cdf.stan
 c8c0a528a0f0048fe0062b9ea73cc585 *inst/stan/functions/primarycensored_ode.stan
 54d8e34571d47d4a8533d53fe8230f53 *inst/stan/pcens_model.stan
