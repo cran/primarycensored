@@ -1,6 +1,6 @@
 Package: primarycensored
 Title: Primary Event Censored Distributions
-Version: 1.5.1
+Version: 1.5.2
 Authors@R: 
   c(person(given = "Sam",
            family = "Abbott",
@@ -54,8 +54,10 @@ URL: https://primarycensored.epinowcast.org,
         https://github.com/epinowcast/primarycensored
 BugReports: https://github.com/epinowcast/primarycensored/issues
 Depends: R (>= 4.0.0)
-Suggests: bookdown, cmdstanr, dplyr, fitdistrplus, knitr, ggplot2,
-        rmarkdown, spelling, testthat (>= 3.1.9), usethis, withr
+Imports: lifecycle
+Suggests: bookdown, cmdstanr, dplyr, fitdistrplus, flexsurv, knitr,
+        ggplot2, rmarkdown, spelling, testthat (>= 3.1.9), usethis,
+        withr
 Additional_repositories: https://stan-dev.r-universe.dev
 Config/Needs/hexsticker: hexSticker, sysfonts, ggplot2
 Config/Needs/website: r-lib/pkgdown, epinowcast/enwtheme
@@ -63,10 +65,10 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-GB
 LazyData: true
-RoxygenNote: 7.3.3
 VignetteBuilder: knitr
+RoxygenNote: 7.3.3
 NeedsCompilation: no
-Packaged: 2026-06-15 12:57:40 UTC; lshsa2
+Packaged: 2026-09-10 21:05:08 UTC; seabbs
 Author: Sam Abbott [aut, cre, cph] (ORCID:
     <https://orcid.org/0000-0001-8057-8037>),
   Sam Brand [aut] (ORCID: <https://orcid.org/0000-0003-0645-5367>),
@@ -77,4 +79,4 @@ Author: Sam Abbott [aut, cre, cph] (ORCID:
   Kelly Charniga [aut] (ORCID: <https://orcid.org/0000-0002-7648-7041>)
 Maintainer: Sam Abbott <contact@samabbott.co.uk>
 Repository: CRAN
-Date/Publication: 2026-06-15 14:20:02 UTC
+Date/Publication: 2026-09-11 03:00:02 UTC

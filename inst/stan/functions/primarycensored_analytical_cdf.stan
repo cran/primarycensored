@@ -1,6 +1,14 @@
 /**
-  * Check if an analytical solution exists for the given distribution combination
+  * Check if an analytical solution exists for the given distribution
+  * combination
   * @ingroup analytical_solution_helpers
+  *
+  * The non-parametric step (26) and discrete-hazard (27, 28) delays are
+  * analytic for every primary `primary_lcdf` currently supports, the uniform
+  * (1) and exponential growth (2). That list is repeated by hand below, so
+  * adding a primary to `primary_lcdf` does not extend the analytic path on
+  * its own: without a matching update here the new primary silently falls
+  * back to numerical integration.
   *
   * @param dist_id Distribution identifier for the delay distribution
   * @param primary_id Distribution identifier for the primary distribution
@@ -8,9 +16,14 @@
   * @return 1 if an analytical solution exists, 0 otherwise
   */
 int check_for_analytical(int dist_id, int primary_id) {
-  if (dist_id == 2 && primary_id == 1) return 1; // Gamma delay with Uniform primary
-  if (dist_id == 1 && primary_id == 1) return 1; // Lognormal delay with Uniform primary
-  if (dist_id == 3 && primary_id == 1) return 1; // Weibull delay with Uniform primary
+  if (dist_id == 2 && primary_id == 1) return 1; // Gamma, Uniform
+  if (dist_id == 1 && primary_id == 1) return 1; // Lognormal, Uniform
+  if (dist_id == 3 && primary_id == 1) return 1; // Weibull, Uniform
+  if (dist_id == 5 && primary_id == 1) return 1; // Generalised gamma, Uniform
+  // Keep this primary list in sync with `primary_lcdf`; see the note above.
+  if (dist_id == 26 || dist_id == 27 || dist_id == 28) {
+    return primary_id == 1 || primary_id == 2;
+  }
   return 0; // No analytical solution for other combinations
 }
 
@@ -87,28 +100,37 @@ real primarycensored_lognormal_uniform_lcdf(data real d, real q, array[] real pa
   // log E where E = exp(mu + sigma^2/2) is the mean of the delay
   real log_E = mu + 0.5 * square(sigma);
 
-  real log_F_T_d = lognormal_lcdf(d | mu, sigma);
-  real log_tF_T_d = lognormal_lcdf(d | mu_sigma2, sigma);
-
-  // q-dependent terms (guard only to avoid log(0); final algebra is unified).
-  real log_q_F_T_q;    // log(q * F_T(q))
-  real log_E_tF_T_q;   // log(E * tilde F_T(q))
-  if (q > 0) {
-    real log_F_T_q = lognormal_lcdf(q | mu, sigma);
-    real log_tF_T_q = lognormal_lcdf(q | mu_sigma2, sigma);
-    log_q_F_T_q = log(q) + log_F_T_q;
-    log_E_tF_T_q = log_E + log_tF_T_q;
-  } else {
-    log_q_F_T_q = negative_infinity();
-    log_E_tF_T_q = negative_infinity();
-  }
+  // Each term is formed whole and dropped whole. Adding a `-inf` log CDF to
+  // the parameter-dependent `log(d)` or `log_E` first would leave an edge
+  // back to the parameters that `log_sum_exp` differentiates to
+  // `exp(-inf - -inf)`. `q <= 0` underflows on the same test, so it needs no
+  // separate branch.
+  real log_d_F_T_d = lognormal_lcdf_underflows(d, mu, sigma)
+                     ? negative_infinity()
+                     : log(d) + lognormal_lcdf(d | mu, sigma);
+  real log_E_tF_T_d = lognormal_lcdf_underflows(d, mu_sigma2, sigma)
+                      ? negative_infinity()
+                      : log_E + lognormal_lcdf(d | mu_sigma2, sigma);
+  real log_q_F_T_q = lognormal_lcdf_underflows(q, mu, sigma)
+                     ? negative_infinity()
+                     : log(q) + lognormal_lcdf(q | mu, sigma);
+  real log_E_tF_T_q = lognormal_lcdf_underflows(q, mu_sigma2, sigma)
+                      ? negative_infinity()
+                      : log_E + lognormal_lcdf(q | mu_sigma2, sigma);
 
   // Unified form: F_{S+}(d) = (A - B) / w_P with
   //   A = d * F_T(d) + E * tilde F_T(q)
   //   B = q * F_T(q) + E * tilde F_T(d)
   // Ordering A >= B is guaranteed by F_{S+}(d) >= 0.
-  real log_A = log_sum_exp(log(d) + log_F_T_d, log_E_tF_T_q);
-  real log_B = log_sum_exp(log_q_F_T_q, log_E + log_tF_T_d);
+  real log_A = log_sum_exp(log_d_F_T_d, log_E_tF_T_q);
+  real log_B = log_sum_exp(log_q_F_T_q, log_E_tF_T_d);
+
+  // Deep enough into the lower tail every term underflows together. Both
+  // are then constant `-inf` and `log_diff_exp` would give NaN, so return
+  // the limit directly.
+  if (is_inf(log_A)) {
+    return negative_infinity();
+  }
 
   return log_diff_exp(log_A, log_B) - log_window;
 }
@@ -178,6 +200,59 @@ real primarycensored_weibull_uniform_lcdf(data real d, real q, array[] real para
 }
 
 /**
+  * Compute the primary event censored log CDF analytically for generalised gamma delay with Uniform primary
+  * @ingroup primary_event_analytical_distributions
+  *
+  * Uses the Stacy parameterisation of `flexsurv::pgengamma.orig()`, see
+  * `gengamma_lcdf`. The mean is E = scale * Gamma(k + 1/shape) / Gamma(k)
+  * and the partial expectation distribution is the generalised gamma with k
+  * replaced by k + 1/shape, so this generalises the Gamma (shape = 1) and
+  * Weibull (k = 1) solutions.
+  *
+  * @param d Delay time
+  * @param q Lower bound of integration (max(d - pwindow, 0))
+  * @param params Array of generalised gamma distribution parameters
+  * [shape, scale, k]
+  * @param pwindow Primary event window
+  *
+  * @return Log of the primary event censored CDF for generalised gamma delay
+  * with Uniform primary
+  */
+real primarycensored_gengamma_uniform_lcdf(data real d, real q, array[] real params, data real pwindow) {
+  real shape = params[1];
+  real scale = params[2];
+  real k = params[3];
+  real k_shift = k + inv(shape);
+  real log_window = log(pwindow);
+  // log E where E = scale * Gamma(k + 1/shape) / Gamma(k) is the mean of the
+  // delay
+  real log_E = log(scale) + lgamma(k_shift) - lgamma(k);
+
+  real log_F_T_d = gengamma_lcdf(d | shape, scale, k);
+  real log_tF_T_d = gengamma_lcdf(d | shape, scale, k_shift);
+
+  // q-dependent terms (guard only to avoid log(0); final algebra is unified).
+  real log_q_F_T_q;    // log(q * F_T(q))
+  real log_E_tF_T_q;   // log(E * tilde F_T(q))
+  if (q > 0) {
+    log_q_F_T_q = log(q) + gengamma_lcdf(q | shape, scale, k);
+    log_E_tF_T_q = log_E + gengamma_lcdf(q | shape, scale, k_shift);
+  } else {
+    log_q_F_T_q = negative_infinity();
+    log_E_tF_T_q = negative_infinity();
+  }
+
+  // Unified form: F_{S+}(d) = (A - B) / w_P with
+  //   A = d * F_T(d) + E * tilde F_T(q)
+  //   B = q * F_T(q) + E * tilde F_T(d)
+  // Ordering A >= B is guaranteed by F_{S+}(d) >= 0.
+  real log_A = log_sum_exp(log(d) + log_F_T_d, log_E_tF_T_q);
+  real log_B = log_sum_exp(log_q_F_T_q, log_E + log_tF_T_d);
+
+  return log_diff_exp(log_A, log_B) - log_window;
+}
+
+/**
   * Compute the primary event censored log CDF analytically for a single delay
   * (internal version without truncation)
   * @ingroup primary_event_analytical_distributions
@@ -185,7 +260,8 @@ real primarycensored_weibull_uniform_lcdf(data real d, real q, array[] real para
 real primarycensored_analytical_lcdf_raw(data real d, int dist_id,
                                          array[] real params,
                                          data real pwindow,
-                                         int primary_id) {
+                                         int primary_id,
+                                         array[] real primary_params) {
   real q = max({d - pwindow, 0});
 
   if (dist_id == 2 && primary_id == 1) {
@@ -194,6 +270,26 @@ real primarycensored_analytical_lcdf_raw(data real d, int dist_id,
     return primarycensored_lognormal_uniform_lcdf(d | q, params, pwindow);
   } else if (dist_id == 3 && primary_id == 1) {
     return primarycensored_weibull_uniform_lcdf(d | q, params, pwindow);
+  } else if (dist_id == 5 && primary_id == 1) {
+    return primarycensored_gengamma_uniform_lcdf(d | q, params, pwindow);
+  } else if (dist_id == 26) {
+    // params = [boundaries (K+1), pmf (K)]; length 2*K + 1.
+    int K = (size(params) - 1) %/% 2;
+    return discretestep_lcdf(
+      d | to_vector(segment(params, 1, K + 1)),
+          to_vector(segment(params, K + 2, K)),
+          primary_id, primary_params, pwindow
+    );
+  } else if (dist_id == 27 || dist_id == 28) {
+    // params = [boundaries (K+1), hazards (K)]; length 2*K + 1. The last
+    // hazard must equal 1. RW (27) and RE (28) only differ in their
+    // prior so they share this likelihood dispatch.
+    int K = (size(params) - 1) %/% 2;
+    return discretehazard_lcdf(
+      d | to_vector(segment(params, 1, K + 1)),
+          to_vector(segment(params, K + 2, K)),
+          primary_id, primary_params, pwindow
+    );
   }
   return negative_infinity();
 }
@@ -223,7 +319,7 @@ real primarycensored_analytical_lcdf(data real d, int dist_id,
   if (d >= D) return 0;
 
   real result = primarycensored_analytical_lcdf_raw(
-    d, dist_id, params, pwindow, primary_id
+    d, dist_id, params, pwindow, primary_id, primary_params
   );
 
   // Apply truncation normalization

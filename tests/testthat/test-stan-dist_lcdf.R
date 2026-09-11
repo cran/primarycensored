@@ -229,7 +229,7 @@ test_that(
     )
 
     for (dist in dists) {
-      d <- dist$delay %||% delay
+      d <- if (is.null(dist$delay)) delay else dist$delay
       dist_id <- pcd_stan_dist_id(dist$name)
       stan_result <- dist_lcdf(d, dist$params, dist_id)
       r_result <- dist$r_cdf(d, dist$params)
@@ -242,5 +242,46 @@ test_that(
         )
       )
     }
+  }
+)
+
+test_that(
+  "Stan gengamma_lcdf matches flexsurv and its gamma and Weibull special cases",
+  {
+    skip_if_not_installed("flexsurv")
+    delays <- c(0.1, 1, 2.5, 10)
+    for (delay in delays) {
+      expect_equal(
+        gengamma_lcdf(delay, 1.5, 2.0, 0.8),
+        flexsurv::pgengamma.orig(
+          delay,
+          shape = 1.5, scale = 2.0, k = 0.8, log.p = TRUE
+        ),
+        tolerance = 1e-6
+      )
+      # shape = 1 is the gamma distribution with shape k and scale 2
+      expect_equal(
+        gengamma_lcdf(delay, 1.0, 2.0, 0.8),
+        pgamma(delay, shape = 0.8, scale = 2.0, log.p = TRUE),
+        tolerance = 1e-6
+      )
+      # k = 1 is the Weibull distribution
+      expect_equal(
+        gengamma_lcdf(delay, 1.5, 2.0, 1.0),
+        pweibull(delay, shape = 1.5, scale = 2.0, log.p = TRUE),
+        tolerance = 1e-6
+      )
+    }
+    # dist_lcdf dispatches dist_id = 5 to gengamma_lcdf
+    expect_equal(
+      dist_lcdf(2.5, c(1.5, 2.0, 0.8), 5L),
+      flexsurv::pgengamma.orig(
+        2.5,
+        shape = 1.5, scale = 2.0, k = 0.8, log.p = TRUE
+      ),
+      tolerance = 1e-6,
+      info = "dist_id 5 should be generalised gamma"
+    )
+    expect_identical(dist_lcdf(0, c(1.5, 2.0, 0.8), 5L), -Inf)
   }
 )

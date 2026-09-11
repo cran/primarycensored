@@ -3,6 +3,8 @@ test_that("pcd_stan_dist_id works for valid distributions", {
   expect_identical(pcd_stan_dist_id("lnorm", "delay"), 1L)
   expect_identical(pcd_stan_dist_id("lognormal", "delay"), 1L)
   expect_identical(pcd_stan_dist_id("gamma", "delay"), 2L)
+  expect_identical(pcd_stan_dist_id("gengamma", "delay"), 5L)
+  expect_identical(pcd_stan_dist_id("generalized gamma", "delay"), 5L)
 
   # Test primary distributions
   expect_identical(pcd_stan_dist_id("unif", "primary"), 1L)
@@ -29,4 +31,16 @@ test_that("Distribution IDs match Stan model definitions", {
 
   prim_dists <- pcd_primary_distributions
   expect_identical(prim_dists$stan_id, seq_len(nrow(prim_dists)))
+})
+
+test_that("pcd_stan_dist_id returns 26L for discretestep distribution", {
+  expect_identical(pcd_stan_dist_id("discretestep"), 26L)
+  expect_identical(pcd_stan_dist_id("nonparametric"), 26L)
+})
+
+test_that("pcd_stan_dist_id returns 27L and 28L for the two hazard variants", {
+  expect_identical(pcd_stan_dist_id("discretehazard_rw"), 27L)
+  expect_identical(pcd_stan_dist_id("hazard random walk"), 27L)
+  expect_identical(pcd_stan_dist_id("discretehazard_re"), 28L)
+  expect_identical(pcd_stan_dist_id("hazard random effect"), 28L)
 })
